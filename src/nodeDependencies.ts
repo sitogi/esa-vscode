@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
+import { getCategories } from "./EsaClient";
 
 export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   private _onDidChangeTreeData: vscode.EventEmitter<Dependency | undefined> = new vscode.EventEmitter<
@@ -43,6 +44,8 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
    * Given the path to package.json, read all its dependencies and devDependencies.
    */
   private getDepsInPackageJson(packageJsonPath: string): Dependency[] {
+    getCategories();
+
     if (this.pathExists(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
 
@@ -81,6 +84,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   }
 }
 
+// アイテム一個一個を表すやつっぽい
 export class Dependency extends vscode.TreeItem {
   constructor(
     public readonly label: string,

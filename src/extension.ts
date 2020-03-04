@@ -2,10 +2,10 @@
 
 import * as vscode from "vscode";
 
-import { DepNodeProvider, Dependency } from "./nodeDependencies";
+import { DepNodeProvider as EsaPostsProvider, Dependency } from "./nodeDependencies";
 
 export function activate(context: vscode.ExtensionContext) {
-  const nodeDependenciesProvider = new DepNodeProvider(vscode.workspace.rootPath);
+  const nodeDependenciesProvider = new EsaPostsProvider(vscode.workspace.rootPath);
   vscode.window.registerTreeDataProvider("nodeDependencies", nodeDependenciesProvider);
   vscode.commands.registerCommand("nodeDependencies.refreshEntry", () => nodeDependenciesProvider.refresh());
   vscode.commands.registerCommand("extension.openPackageOnNpm", moduleName =>
